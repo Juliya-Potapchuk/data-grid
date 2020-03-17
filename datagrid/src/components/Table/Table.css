@@ -1,5 +1,6 @@
 
 .table {
+    position: relative;
     width: 1089px;
     border: 1px solid;
     border-radius: 10px;
@@ -7,6 +8,11 @@
     margin: 0 auto;
     margin-top: 16px;
     background: #1c37f50d;
+}
+
+.table thead th {
+    position: sticky;
+    top:0;
 }
 
 .table tr:nth-child(odd) {
