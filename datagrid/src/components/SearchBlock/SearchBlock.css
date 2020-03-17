@@ -1,0 +1,68 @@
+.search-block {
+    display: flex;
+    justify-content: space-around;
+    margin: 55px auto 0 auto;
+}
+
+.search-block-sections {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox {
+    width: 40px;
+    height: 25px;
+}
+
+.search-block > .block-movie-genre {
+    align-items: baseline;
+}
+
+.movie-genre {
+    width: 457px;
+    margin-left: 7px;
+    height: 15px;
+  }
+
+
+.input-search {
+    font-size: 16px;
+    padding-left: 7px;
+    box-sizing: border-box;
+    width: 300px;
+    height: 38px;
+    border-radius: 5px;
+    border: 1px solid #92989170;
+}
+
+.button-search {
+    color: white;
+    width: 41px;
+    height: 35px;
+    border: 2px solid #929891f2;
+    border-left: none;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background: linear-gradient(#9ee089, #415e3f);
+}
+
+.name-email-filter-flag {
+    width: 50px;
+    height: 23px;
+    background: linear-gradient(#9ee089, #415e3f);
+    color: white;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 3px;
+    padding-top: 11px;
+}
+
+.name-email-filter-flag  p {
+    line-height: 0;
+    margin: 0;
+}
+
+.name-flag {
+    margin: 0 5px;
+}

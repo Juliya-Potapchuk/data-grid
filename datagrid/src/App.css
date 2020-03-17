@@ -1,0 +1,17 @@
+button, 
+button:active, 
+button:focus {
+    outline: none;
+}
+
+input, 
+input:active, 
+input:focus {
+    outline: none;
+}
+
+select, 
+select:active, 
+select:focus {
+    outline: none;
+}
