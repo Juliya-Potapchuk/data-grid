@@ -33,10 +33,10 @@ export function getSerchValue(searchValue) {
   }
 }
 
-export function getIdRow(idRow, deleteAction) {
+export function getIdRow(objForDeleteRow) {
   return {
     type: DELETE_ROW,
-    payload: { idRow, deleteAction },
+    payload: { objForDeleteRow },
   }
 }
 

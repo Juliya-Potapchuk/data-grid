@@ -15,9 +15,13 @@
     top:0;
 }
 
-.table tr:nth-child(odd) {
-    background: #bee6c0;
-  }
+.row-body-default {
+    background: #daf7db78; 
+}
+
+.row-body-active {
+    background: #62aa66;
+}
 
 .table td {
     padding: 9px 5px;
@@ -49,7 +53,7 @@ th, td {
     padding-left: 11px;
 }
 
-.block-button-delete {
+.block-buttons {
     display: flex;
     justify-content: flex-end;
     margin-top: 31px;
@@ -59,7 +63,7 @@ th, td {
 .button-delete-row {
     cursor: pointer;
     background: #bee6c0;
-    width: 120px;
+    width: 125px;
     height: 36px;
     font-size: 15px;
     border: 1px solid #92989170;
@@ -67,12 +71,23 @@ th, td {
     box-shadow: 1px -1px 5px -2px #000000a1;
 }
 
-.button-delete-row:hover {
+.button-download {
+    margin-right: 23px;
+    cursor: pointer;
+    background: #bee6c0;
+    width: 120px;
+    height: 36px;
+    font-size: 15px;
+    border: 1px solid #92989170;
+    border-radius: 5px;
+    box-shadow: 1px -1px 5px -2px #000000a1; 
+}
+.button-delete-row:hover, .button-download:hover {
     background: #b1d6b3;; 
 }
 
-.table tbody > .active {
-    background: #62aa66;
+.fa-download, .fa-trash {
+    margin-right: 10px;
 }
 
 /* header */

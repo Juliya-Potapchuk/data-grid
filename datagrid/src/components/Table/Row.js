@@ -1,9 +1,9 @@
 import React from 'react';
-
 import './Table.css';
 import '../../App.css';
 
 function Row({
+  index,
   id,
   name,
   registration_date,
@@ -12,39 +12,43 @@ function Row({
   phone,
   is_active,
   getIdRowAction,
-  idRow,
+  objForDeleteRow,
   visibleColumns
 }) {
 
-  const rowClick = (e) => {
-    const clickRow = e.target.parentElement;
-    const id = clickRow.id;
-    const deleteAction = false;
+  const rowClick = (event, index) => {
+    let { classList, singleClickRow, multipleClickRow, historyDeleteRow } = objForDeleteRow;
+    const id = event.target.parentElement.id;
+    objForDeleteRow.deleteAction = false;
+    objForDeleteRow.historyDeleteRow = historyDeleteRow;
 
-    if (!e.ctrlKey || !e.shiftKey) {
-      if (Boolean(idRow) === false) {
-        clickRow.classList.toggle('active')
-        idRow = { id: id }
-        getIdRowAction(idRow, deleteAction);
+    if (!event.ctrlKey || !event.shiftKey) {
 
-      } else {
-        if (+idRow.id === +id) {
-          clickRow.classList.toggle('active')
-          idRow = false;
-          getIdRowAction(idRow, deleteAction);
-        } else {
-          (document.querySelectorAll('.active')).forEach(item => { item.classList.remove("active") });
-          clickRow.classList.add('active');
-          idRow = { id: id }
-          getIdRowAction(idRow, deleteAction);
+      if (singleClickRow[0] === id) {
+        classList[index] = (classList[index] === 'row-body-default') ? 'row-body-active' : 'row-body-default';
+
+        if (multipleClickRow.length !== 0) {
+          multipleClickRow.forEach((elementId) => {
+            const indexMultipleClickRow = elementId - 1 - historyDeleteRow.length;
+            classList.forEach(element => {
+              classList[indexMultipleClickRow] = 'row-body-default'
+            });
+          });
         }
+        objForDeleteRow.multipleClickRow = []
+      } else {
+        classList.fill('row-body-default');
+        singleClickRow[0] = id;
+        classList[index] = 'row-body-active';
+        objForDeleteRow.multipleClickRow = []
       }
 
     } else {
-      clickRow.classList.add('active');
-      const idRow = document.querySelectorAll('.active');
-      getIdRowAction(idRow, deleteAction);
+      classList[singleClickRow[0] - 1 - historyDeleteRow.length] = 'row-body-default';
+      multipleClickRow.push(id);
+      classList[index] = 'row-body-active';
     }
+    getIdRowAction(objForDeleteRow);
   }
 
   const visibleMovieGenreColumns = () => {
@@ -62,7 +66,12 @@ function Row({
   }
 
   return (
-    <tr id={id} key={id} onClick={(e) => rowClick(e)}>
+    <tr
+      id={id}
+      key={id}
+      className={`${objForDeleteRow.classList[index]}`}
+      onClick={(event) => rowClick(event, index)}
+    >
       <td className="centerAlign">{id}</td>
       <td className="centerAlign">{
         (is_active === 'true') ? (<i className="fa fa-check" aria-hidden="true"></i>) : ('—')

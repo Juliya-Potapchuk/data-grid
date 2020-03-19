@@ -7,7 +7,7 @@ import SearchBlock from '../SearchBlock';
 
 import './Table.css';
 import '../../App.css';
-
+import { exportCsv } from '../../utils/exportCsv';
 
 const Table = ({
   sort,
@@ -18,11 +18,26 @@ const Table = ({
   getIdRowAction,
   setVisibleColumnsAction
 }) => {
-  const { data, direction, idRow, visibleColumns} = sort;
+  const { data, direction, objForDeleteRow, visibleColumns } = sort;
+
 
   const buttonDeleteRow = () => {
-    const deleteAction = true;
-    getIdRowAction(idRow, deleteAction)
+    let { singleClickRow, multipleClickRow, historyDeleteRow } = objForDeleteRow;
+
+    objForDeleteRow.deleteAction = true;
+    objForDeleteRow.singleClickRow = singleClickRow;
+    objForDeleteRow.multipleClickRow = multipleClickRow;
+    objForDeleteRow.historyDeleteRow = historyDeleteRow;
+    
+    let arrayRows = (multipleClickRow.length === 0) ? singleClickRow : multipleClickRow;
+
+    arrayRows.forEach(id => {
+      historyDeleteRow.push(id)
+    });
+
+    const calcLengthclassList = 1000 - historyDeleteRow.length;
+    objForDeleteRow.classList = (new Array(calcLengthclassList)).fill('row-body-default', 0, calcLengthclassList);
+    getIdRowAction(objForDeleteRow);
   }
 
   return (
@@ -32,8 +47,15 @@ const Table = ({
         getEnumValueAction={getEnumValueAction}
         getCheckboxValueAction={getCheckboxValueAction}
       />
-      <div className="block-button-delete">
-        <button className="button-delete-row" onClick={() => buttonDeleteRow()}>Delete row(s)</button>
+      <div className="block-buttons">
+        <button className="button-download" onClick={() => exportCsv(data, visibleColumns)}>
+          <i className="fa fa-download" aria-hidden="true"></i>
+          Download
+        </button>
+        <button className="button-delete-row" onClick={() => buttonDeleteRow()}>
+          <i className="fa fa-trash" aria-hidden="true"></i>
+          Delete row(s)
+        </button>
       </div>
       <table className="table" >
         <HeaderTable
@@ -45,7 +67,7 @@ const Table = ({
         <Body
           data={data}
           getIdRowAction={getIdRowAction}
-          idRow={idRow}
+          objForDeleteRow={objForDeleteRow}
           visibleColumns={visibleColumns}
         />
       </table>
@@ -67,7 +89,7 @@ const mapDispatchToProps = dispatch => {
     getSerchValueAction: (searchValue) => dispatch(getSerchValue(searchValue)),
     getIdRowAction: (idRow, deleteAction) => dispatch(getIdRow(idRow, deleteAction)),
     setVisibleColumnsAction: (visibleColumns) => dispatch(setVisibleColumns(visibleColumns)),
-      }
+  }
 }
 
 export default connect(

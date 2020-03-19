@@ -2,14 +2,15 @@ import React from 'react';
 import Row from './Row';
 
 
-function Body({ data, getIdRowAction, idRow, visibleColumns}) {
+function Body({ data, getIdRowAction, objForDeleteRow, visibleColumns}) {
 
   const renderTableBody = () => data.map((element, index) => (
     <Row
       key={index}
+      index={index}
       {...element}
       getIdRowAction={getIdRowAction}
-      idRow={idRow}
+      objForDeleteRow={objForDeleteRow}
       visibleColumns={visibleColumns}
     />
   ));
