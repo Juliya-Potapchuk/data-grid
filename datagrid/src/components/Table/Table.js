@@ -1,13 +1,20 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { HeaderTable } from './Header';
-import { sortId, getCheckboxValue, getEnumValue, getSerchValue, getIdRow, setVisibleColumns } from '../../actions/actions';
-import Body from './Body';
-import SearchBlock from '../SearchBlock';
+import React from "react";
+import { connect } from "react-redux";
+import { HeaderTable } from "./Header";
+import {
+  sortId,
+  getCheckboxValue,
+  getEnumValue,
+  getSerchValue,
+  getIdRow,
+  setVisibleColumns,
+} from "../../actions/actions";
+import Body from "./Body";
+import SearchBlock from "../SearchBlock";
 
-import './Table.css';
-import '../../App.css';
-import { exportCsv } from '../../utils/exportCsv';
+import "./Table.css";
+import "../../App.css";
+import { exportCsv } from "../../utils/exportCsv";
 
 const Table = ({
   sort,
@@ -16,29 +23,37 @@ const Table = ({
   getEnumValueAction,
   getSerchValueAction,
   getIdRowAction,
-  setVisibleColumnsAction
+  setVisibleColumnsAction,
 }) => {
   const { data, direction, objForDeleteRow, visibleColumns } = sort;
 
-
   const buttonDeleteRow = () => {
-    let { singleClickRow, multipleClickRow, historyDeleteRow } = objForDeleteRow;
+    let {
+      singleClickRow,
+      multipleClickRow,
+      historyDeleteRow,
+    } = objForDeleteRow;
 
     objForDeleteRow.deleteAction = true;
     objForDeleteRow.singleClickRow = singleClickRow;
     objForDeleteRow.multipleClickRow = multipleClickRow;
     objForDeleteRow.historyDeleteRow = historyDeleteRow;
-    
-    let arrayRows = (multipleClickRow.length === 0) ? singleClickRow : multipleClickRow;
 
-    arrayRows.forEach(id => {
-      historyDeleteRow.push(id)
+    let arrayRows =
+      multipleClickRow.length === 0 ? singleClickRow : multipleClickRow;
+
+    arrayRows.forEach((id) => {
+      historyDeleteRow.push(id);
     });
 
     const calcLengthclassList = 1000 - historyDeleteRow.length;
-    objForDeleteRow.classList = (new Array(calcLengthclassList)).fill('row-body-default', 0, calcLengthclassList);
+    objForDeleteRow.classList = new Array(calcLengthclassList).fill(
+      "row-body-default",
+      0,
+      calcLengthclassList
+    );
     getIdRowAction(objForDeleteRow);
-  }
+  };
 
   return (
     <>
@@ -48,7 +63,10 @@ const Table = ({
         getCheckboxValueAction={getCheckboxValueAction}
       />
       <div className="block-buttons">
-        <button className="button-download" onClick={() => exportCsv(data, visibleColumns)}>
+        <button
+          className="button-download"
+          onClick={() => exportCsv(data, visibleColumns)}
+        >
           <i className="fa fa-download" aria-hidden="true"></i>
           Download
         </button>
@@ -57,7 +75,7 @@ const Table = ({
           Delete row(s)
         </button>
       </div>
-      <table className="table" >
+      <table className="table">
         <HeaderTable
           direction={direction}
           sortIdAction={sortIdAction}
@@ -72,27 +90,27 @@ const Table = ({
         />
       </table>
     </>
-  )
-}
+  );
+};
 
-const mapStateToProps = store => {
+const mapStateToProps = (store) => {
   return {
     sort: store.sort,
-  }
-}
+  };
+};
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     sortIdAction: (direction) => dispatch(sortId(direction)),
-    getCheckboxValueAction: (checkboxValue) => dispatch(getCheckboxValue(checkboxValue)),
+    getCheckboxValueAction: (checkboxValue) =>
+      dispatch(getCheckboxValue(checkboxValue)),
     getEnumValueAction: (enumValue) => dispatch(getEnumValue(enumValue)),
     getSerchValueAction: (searchValue) => dispatch(getSerchValue(searchValue)),
-    getIdRowAction: (idRow, deleteAction) => dispatch(getIdRow(idRow, deleteAction)),
-    setVisibleColumnsAction: (visibleColumns) => dispatch(setVisibleColumns(visibleColumns)),
-  }
-}
+    getIdRowAction: (idRow, deleteAction) =>
+      dispatch(getIdRow(idRow, deleteAction)),
+    setVisibleColumnsAction: (visibleColumns) =>
+      dispatch(setVisibleColumns(visibleColumns)),
+  };
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Table)
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

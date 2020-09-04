@@ -22,7 +22,7 @@ function Row({
     objForDeleteRow.deleteAction = false;
     objForDeleteRow.historyDeleteRow = historyDeleteRow;
 
-    if (!event.ctrlKey || !event.shiftKey) {
+    if (!event.ctrlKey) {
 
       if (singleClickRow[0] === id) {
         classList[index] = (classList[index] === 'row-body-default') ? 'row-body-active' : 'row-body-default';
